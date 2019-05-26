@@ -6,13 +6,12 @@ for progi in {sqlite3,perl,sed}; do # Check required programs
 done
 
 echo "" && echo "Preprocessing..."
-# read -r columnCount < $1 # Cannot be done via pure line reading, since hidden line breaks are in the CSV, do it via first line header , count!
-# columnCount=$(echo "$columnCount" | tr -cd , | wc -c) # Strip everything but the commas, and then count number of characters left
-columnCount=224
+read -r columnCount < $1 # Cannot be done via pure line reading, since hidden line breaks are in the CSV, do it via first line header , count!
+columnCount=$(echo "$columnCount" | tr -cd , | wc -c) # Strip everything but the commas, and then count number of characters left
 (( columnCount += 1 ))
-# sed -i -r ':a;N;$!ba;s/\n/,/g' $1 # Replace all line breaks with commas
-# perl -pi -w -E 'BEGIN{$/=\1}; y/,/;/ if $in; $in = ! $in if $_ eq "\""' $1 # Replace all commas in quotes with semicolons
-# sed -i -r ':a;s/\|/;/;ta' $1 # Replace all pipes with semicolons
+sed -i -r ':a;N;$!ba;s/\n/,/g' $1 # Replace all line breaks with commas
+perl -pi -w -E 'BEGIN{$/=\1}; y/,/;/ if $in; $in = ! $in if $_ eq "\""' $1 # Replace all commas in quotes with semicolons
+sed -i -r ':a;s/\|/;/;ta' $1 # Replace all pipes with semicolons
 
 fc=${1##*/} # fc=file context
 fc=${fc%.*}
