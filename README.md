@@ -15,9 +15,9 @@ bash fma2sqlite ./path_2_csv_file.csv
 the result will be an minimal `SQLite` database.
 
 # Database
-The `FMA 5.0.0` databse in the `dat/` directory is compressed with [7z](https://www.7-zip.org) for faster downloading.
+The `FMA 5.0.0` database in the `dat/` directory is compressed with [7z](https://www.7-zip.org) for faster downloading.
 
-## Database Structure
+## Structure
 No foreign keys are used, since parents or entries referred to in the `fma` table may not exist during the insertion process.
 ```
 CREATE TABLE fma (pk INTEGER PRIMARY KEY,
